@@ -1,0 +1,41 @@
+﻿@page "/LastPower"
+@using BlazorToDoList.App.Data
+@inject BurninInfoService burninInfoService
+<h3>Current Laser Power</h3>
+@if ((lastPower == -1.0)) 
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+<thead>
+            <tr>
+                <th>Power (W) </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@lastPower</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    double[] powerArray;
+    string[] serials;
+
+    double lastPower = -1.0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        powerArray = await burninInfoService.GetPowerAsync();
+        lastPower = powerArray[powerArray.Length - 1];
+        
+    }
+
+
+
+
+}
