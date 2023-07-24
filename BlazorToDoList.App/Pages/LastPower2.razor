@@ -20,18 +20,53 @@ else
             {
                 <tr>
                     <td>@laserinfo.serial</td>
-                    <td>@laserinfo.Lastpower</td>                    
+                    <td>@laserinfo.Lastpower</td>
+                    <td>
+                        <button onclick=@(()=>clickTd(laserinfo.serial))>INFO</button>
+                        </td>
                 </tr>
             }
         </tbody>
     </table>
+
+if (detailInfo.serial.Length!=0)
+    {
+        <table class="table2">
+        <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Start date</th>
+                    <th>Max.power</th>
+                    <th>Min.Power</th>
+               
+                </tr>
+            </thead>
+        <tbody>
+            <tr>
+               <td>@detailInfo.serial</td>
+               <td>@detailInfo.starttime.ToShortDateString()</td>
+               <td>@detailInfo.maxpower</td>
+               <td>@detailInfo.minpower</td>
+            </tr>
+        </tbody>
+    </table>}
 }
 
 @code {
     List<laserInfo> laserinfoList = new List<laserInfo>();
+    laserInfo detailInfo = new laserInfo();
 
     protected override async Task OnInitializedAsync()
     {
         laserinfoList = await burninInfoService.GetLaserInfoAsync();        
     }
+
+    void clickTd(string serial)
+    {
+        detailInfo = laserinfoList.First(x => x.serial == serial);
+        this.StateHasChanged();   
+    }
+
+    
+    
 }

@@ -13,4 +13,10 @@
     <ProjectReference Include="..\..\..\Iradion\mqttBroker\ConsoleTest\MsgLibrary\MsgLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\demo.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

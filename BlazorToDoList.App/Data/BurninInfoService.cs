@@ -20,7 +20,8 @@ namespace BlazorToDoList.App.Data
     public class BurninInfoService
     {
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        const string filename = @".\data\demo.db";
+        //const string filename = @".\data\demo.db";
+        const string filename = @"S:\05_Production_Documents\500W burnin data\consoletest071723\net6.0\demo.db";
         private List<string> _serialNumebrs = new List<string>();
 
         public List<string>  serials { get=> _serialNumebrs; }
@@ -69,6 +70,10 @@ namespace BlazorToDoList.App.Data
 
         }
 
+        /// <summary>
+        /// Gets the laser information asynchronous.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<laserInfo>> GetLaserInfoAsync()
         {
             logger.Info("GetLaserInfoAsync");
