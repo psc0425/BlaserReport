@@ -1,0 +1,37 @@
+﻿@page "/lastpower2"
+@using BlazorToDoList.App.Data
+@using MyProject;
+@inject BurninInfoService burninInfoService
+@if (laserinfoList.Count == 0) {
+    <p><em>Loading ...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Serial Number</th>
+                <th>Last recorded Power (W)</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var laserinfo in laserinfoList)
+            {
+                <tr>
+                    <td>@laserinfo.serial</td>
+                    <td>@laserinfo.Lastpower</td>                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<laserInfo> laserinfoList = new List<laserInfo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        laserinfoList = await burninInfoService.GetLaserInfoAsync();        
+    }
+}

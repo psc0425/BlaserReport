@@ -7,12 +7,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace BlazorToDoList.App.Data
 {
-    
-    
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class BurninInfoService
     {
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -23,8 +27,10 @@ namespace BlazorToDoList.App.Data
 
         public BurninInfoService()
         {
-            Debug.Print("burninfoService");
+            Debug.Print("##burninfoService##");
         }
+
+
 
         public async Task<double[]> GetPowerAsync()
         {
@@ -63,11 +69,17 @@ namespace BlazorToDoList.App.Data
 
         }
 
-        public async Task<laserInfo[]> GetLaserInfoAsync()
+        public async Task<List<laserInfo>> GetLaserInfoAsync()
         {
-            laserInfo[] laserInfos = new laserInfo[5];
-            return  laserInfos;
+            logger.Info("GetLaserInfoAsync");
+
+            SaveToSqlite.ConnectionString = filename;
+            List<laserInfo> laserInfos = SaveToSqlite.GetLaserInfos();
+            return laserInfos;
+            
         }
+
+
 
         
     }

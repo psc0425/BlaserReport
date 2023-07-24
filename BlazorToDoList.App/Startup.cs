@@ -28,7 +28,9 @@ namespace BlazorToDoList.App
                     options.DetailedErrors = Convert.ToBoolean(Configuration["DetailedErrors"]);
                 });
 
+            //Add services here.
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<BurninInfoService>();
             services.AddTransient<IFileService, FileService>();
             services.AddScoped<IToDoService, ToDoService>();
         }
