@@ -2,7 +2,8 @@
 @using BlazorToDoList.App.Data
 @using MyProject;
 @inject BurninInfoService burninInfoService
-@if (laserinfoList.Count == 0) {
+@if (laserinfoList.Count == 0) 
+{
     <p><em>Loading ...</em></p>
 }
 else
@@ -23,50 +24,79 @@ else
                     <td>@laserinfo.Lastpower</td>
                     <td>
                         <button onclick=@(()=>clickTd(laserinfo.serial))>INFO</button>
-                        </td>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 
-if (detailInfo.serial.Length!=0)
+    if (detailInfo.serial.Length!=0)
     {
         <table class="table2">
-        <thead>
-                <tr>
-                    <th>Serial Number</th>
-                    <th>Start date</th>
-                    <th>Max.power</th>
-                    <th>Min.Power</th>
+            <thead>
+                    <tr>
+                        <th class="col-sm-4">Serial Number</th>
+                        <th class="col-sm-4">Start date</th>
+                        <th class="col-sm-4">Max.power</th>
+                        <th class="col-sm-4">Min.Power</th>
                
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                        <td class="col-sm-4">@detailInfo.serial</td>
+                        <td class="col-sm-4">@detailInfo.starttime.ToShortDateString()</td>
+                        <td class="col-sm-4">@detailInfo.maxpower</td>
+                        <td class="col-sm-4">@detailInfo.minpower</td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+        <table class="table3">
+            <thead>
+                <tr>
+                    <th class="col-sm-4">Elapsed time</th>
+                    
+
                 </tr>
             </thead>
-        <tbody>
-            <tr>
-               <td>@detailInfo.serial</td>
-               <td>@detailInfo.starttime.ToShortDateString()</td>
-               <td>@detailInfo.maxpower</td>
-               <td>@detailInfo.minpower</td>
-            </tr>
-        </tbody>
-    </table>}
+            <tbody>
+                <tr>
+                    <td class="col-sm-4">@detailInfo.elapseTime.ToString("c")</td>
+                   
+                </tr>
+            </tbody>
+
+
+        </table>
+        
+    }
 }
 
 @code {
+
     List<laserInfo> laserinfoList = new List<laserInfo>();
     laserInfo detailInfo = new laserInfo();
 
+    /// <summary>
+    /// on Initialized, get the laser info from the database
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         laserinfoList = await burninInfoService.GetLaserInfoAsync();        
     }
 
+    /// <summary>
+    /// clickTD,    when click the button, show the detail info of the laser
+    /// </summary>
+    /// <param name="serial"></param>
     void clickTd(string serial)
     {
         detailInfo = laserinfoList.First(x => x.serial == serial);
         this.StateHasChanged();   
     }
 
-    
-    
 }
