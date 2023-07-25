@@ -29,6 +29,7 @@ namespace BlazorToDoList.App
                 });
 
             //Add services here.
+            services.AddHttpClient();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<BurninInfoService>();
             services.AddTransient<IFileService, FileService>();

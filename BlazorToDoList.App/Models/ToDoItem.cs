@@ -9,4 +9,6 @@ namespace BlazorToDoList.App.Models
         public bool IsComplete { get; set; }
         public DateTime DateCreated { get; set; }
     }
+
+
 }

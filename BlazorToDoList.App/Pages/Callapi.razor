@@ -1,0 +1,66 @@
+﻿@page "/callapi"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IHttpClientFactory clientFactory
+
+<h1>Call Web API From blazor server razor component</h1>
+
+<button onclick=@(()=>clickSendRestApiRequest())>GET STATUS</button>
+
+
+@if (status.Length > 0) 
+{
+    <h2>@status</h2>
+}
+
+
+@code {
+
+
+
+    public string status = string.Empty;
+    public const string url = @"http://192.168.34.19/status";
+
+    /// <summary>
+    /// clickSendRestApiRequest,    when click the button, show the detail info of the laser
+    /// </summary>
+    /// <param name="serial"></param>
+    async Task clickSendRestApiRequest()
+    {
+        try
+        {
+            var client = clientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+
+                var token = await response.Content.ReadAsStringAsync();
+
+                status = token;
+                StateHasChanged();
+                return;
+
+            }
+            else
+            {
+                throw new Exception($"The call to the server failed.  Status code: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="serial"></param>
+    void getCurrentStatus(string serial)
+    {
+        
+    }
+}
