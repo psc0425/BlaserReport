@@ -13,6 +13,8 @@
     <h2>@status</h2>
 }
 
+<button onclick=@(()=>laserOn())>LASER ON </button>
+
 
 @code {
 
@@ -21,14 +23,22 @@
     public string status = string.Empty;
     public const string url = @"http://192.168.34.19/status";
 
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
     /// <summary>
-    /// clickSendRestApiRequest,    when click the button, show the detail info of the laser
+    /// clickSendRestApiRequest,    when click the button, show the status of the laser
     /// </summary>
     /// <param name="serial"></param>
     async Task clickSendRestApiRequest()
     {
+
         try
         {
+            status = string.Empty;
+            StateHasChanged();
             var client = clientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -59,8 +69,8 @@
     /// 
     /// </summary>
     /// <param name="serial"></param>
-    void getCurrentStatus(string serial)
+    async Task laserOn()
     {
-        
+        return;
     }
 }
